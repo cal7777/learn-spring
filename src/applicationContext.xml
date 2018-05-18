@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN"
+        "http://www.springframework.org/dtd/spring-beans-2.0.dtd">
+<beans>
+
+	<!-- <bean id="userService" class="cn.itheima.ioc.UserServiceImpl"> <property 
+		name="info" value="ITCAST"></property> </bean> -->
+	<!-- 在开发中可以使用id或name id它遵守的xml规范，名称中不能包含特殊符号 name它是为了更好的扩展，在name中可以包含一些特殊符号，例如"/" -->
+	<!-- <bean name="bean1" class="cn.itheima.bean.Bean1" scope="prototype"></bean> -->
+
+	<!-- 静态工厂方法 -->
+	<!-- <bean name="bean2" class="cn.itheima.bean.Bean2Factory" factory-method="createBean2"></bean> -->
+
+	<!-- 实例工厂方法 -->
+	<!-- <bean name="bean3Factory" class="cn.itheima.bean.Bean3Factory"></bean> 
+		<bean name="bean3" factory-bean="bean3Factory" factory-method="createBean3"></bean> -->
+
+
+	<!-- <bean id="beanLifeCycle" class="cn.itheima.bean.BeanLifeCycle" init-method="myInit" 
+		destroy-method="myDestroy"> <property name="name" value="itcast"></property> 
+		</bean> <bean class="cn.itheima.bean.MyBeanPostProcess"></bean> -->
+
+	<!-- 使用构造方法对car的属性进行注入 -->
+	<bean id="car" class="cn.itheima.di.Car">
+		<constructor-arg index="0" type="java.lang.String"
+			value="奔弛"></constructor-arg>
+		<constructor-arg index="1" type="double" value="1000000"></constructor-arg>
+	</bean>
+
+	<!-- 使用setter方法对car的属性进行注入 -->
+	<bean id="car1" class="cn.itheima.di.Car">
+		<property name="name" value="宝马" />
+		<property name="price" value="500000" />
+	</bean>
+
+	<bean id="person" class="cn.itheima.di.Person">
+		<property name="name" value="张三" />
+		<property name="car" ref="car1" /><!-- ref引用其它bean的id或name值 -->
+	</bean>
+	
+	<!-- 集合属性注入 -->
+	<bean id="collectionDemo" class="cn.itheima.di.CollectionDemo">
+		<property name="list">
+			<list>
+				<value>张三</value>
+				<value>10</value>
+				<ref bean="car"/>
+			</list>
+		</property>
+		
+		<property name="set">
+			<set>
+				<value>10</value>
+				<value>李四</value>
+				<ref bean="person"/>
+			</set>
+		</property>
+		
+		<property name="map">
+			<map>
+				<entry key="username" value="李四"></entry>
+				<entry key-ref="person" value-ref="car"></entry> 
+			</map>
+		</property>
+		
+		<property name="props">
+			<props>
+				<prop key="company">ITCAST</prop>
+				<prop key="price">10000</prop>
+			</props>
+		</property>
+	</bean>
+</beans>
